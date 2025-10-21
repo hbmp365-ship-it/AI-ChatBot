@@ -1,42 +1,246 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@keyframes logo-spin {
+.App {
+  width: 100%;
+  height: 100vh;
+  background-color: #013220;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* 채팅 컨테이너 */
+.chat-container {
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  max-height: 800px;
+  background-color: #A8C5BA;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 헤더 */
+.chat-header {
+  background-color: #013220;
+  color: white;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.restart-btn {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.restart-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 메시지 영역 */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: rgba(1, 50, 32, 0.3);
+  border-radius: 3px;
+}
+
+/* 말풍선 컨테이너 */
+.chat-bubble-container {
+  display: flex;
+  margin-bottom: 8px;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.chat-bubble-container.left {
+  justify-content: flex-start;
+}
+
+.chat-bubble-container.right {
+  justify-content: flex-end;
+}
+
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(10px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* 말풍선 */
+.chat-bubble {
+  max-width: 70%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  line-height: 1.5;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.ai-bubble {
+  background-color: white;
+  color: #333;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.user-bubble {
+  background-color: #FFE812;
+  color: #333;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 메시지 텍스트 */
+.message-text {
+  font-size: 15px;
+  white-space: pre-wrap;
+  margin-bottom: 8px;
+}
+
+.chat-bubble:not(:has(.quick-reply-buttons)):not(:has(.card-options)) .message-text {
+  margin-bottom: 0;
+}
+
+/* 빠른 답장 버튼 */
+.quick-reply-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.quick-reply-btn {
+  background-color: #013220;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 22px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+  font-weight: 500;
+}
+
+.quick-reply-btn:hover {
+  background-color: #025030;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(1, 50, 32, 0.3);
+}
+
+.quick-reply-btn:active {
+  transform: translateY(0);
+}
+
+/* 카드 옵션 버튼 */
+.card-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.card-option-btn {
+  background-color: #f8f9fa;
+  color: #333;
+  border: 2px solid #013220;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: left;
+  font-weight: 500;
+}
+
+.card-option-btn:hover {
+  background-color: #013220;
+  color: white;
+  transform: translateX(4px);
+}
+
+.card-option-btn:active {
+  transform: translateX(2px);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .App {
+    padding: 0;
+  }
+
+  .chat-container {
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .chat-bubble {
+    max-width: 80%;
   }
 }
 
-.card {
-  padding: 2em;
+/* 로딩 애니메이션 (선택적) */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
-.read-the-docs {
-  color: #888;
+.loading {
+  animation: pulse 1.5s ease-in-out infinite;
 }

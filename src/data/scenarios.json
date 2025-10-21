@@ -1,0 +1,318 @@
+{
+  "scenarios": [
+    {
+      "scenario_id": "AIJOIN001",
+      "title": "예약취소",
+      "description": "골프장 예약을 취소하는 시나리오",
+      "steps": [
+        {
+          "id": "intro",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "안녕하세요, 티샷 AI입니다.\n무엇을 도와드릴까요?",
+          "component": "quick_reply",
+          "options": ["예약취소", "예약확인", "추천 받는 라운딩"],
+          "delay": 1500,
+          "next": "user_select_cancel"
+        },
+        {
+          "id": "user_select_cancel",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "예약취소",
+          "next": "ai_show_reservations"
+        },
+        {
+          "id": "ai_show_reservations",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "현재 예약 내역이에요.\n어떤 예약을 취소하시겠어요?",
+          "component": "card",
+          "options": [
+            "10월 26일 그린힐CC",
+            "12월 29일 라온CC"
+          ],
+          "delay": 1500,
+          "next": "user_select_reservation"
+        },
+        {
+          "id": "user_select_reservation",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "10월 26일 그린힐CC",
+          "next": "ai_show_detail"
+        },
+        {
+          "id": "ai_show_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "그린힐CC 라운딩 예약입니다.\n그린피 18만원, 카트피 4만원, 캐디피 12만원이에요.\n취소하시겠어요?",
+          "options": ["취소하기", "유지하기"],
+          "delay": 1500,
+          "next": "user_decision"
+        },
+        {
+          "id": "user_decision",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "취소하기",
+          "next": "ai_confirm_cancel"
+        },
+        {
+          "id": "ai_confirm_cancel",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "정말 취소하시겠어요?\n취소 수수료 10%가 발생합니다.",
+          "component": "quick_reply",
+          "options": ["네, 취소할게요", "아니요, 유지할게요"],
+          "delay": 1500,
+          "next": "user_final_decision"
+        },
+        {
+          "id": "user_final_decision",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "네, 취소할게요",
+          "next": "ai_confirm"
+        },
+        {
+          "id": "ai_confirm",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "예약이 취소되었습니다.\n환불은 3영업일 이내 처리됩니다.",
+          "delay": 1500,
+          "on_end": "예약목록 화면으로 이동",
+          "next": "end"
+        }
+      ]
+    },
+    {
+      "scenario_id": "AIJOIN002",
+      "title": "예약확인",
+      "description": "골프장 예약 내역을 확인하는 시나리오",
+      "steps": [
+        {
+          "id": "intro",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "안녕하세요, 티샷 AI입니다.\n무엇을 도와드릴까요?",
+          "component": "quick_reply",
+          "options": ["예약취소", "예약확인", "추천 받는 라운딩"],
+          "delay": 1500,
+          "next": "user_select_check"
+        },
+        {
+          "id": "user_select_check",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "예약확인",
+          "next": "ai_ask_period"
+        },
+        {
+          "id": "ai_ask_period",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "어느 기간의 예약을 확인하실까요?",
+          "component": "quick_reply",
+          "options": ["전체 예약", "이번 달", "다음 달"],
+          "delay": 1500,
+          "next": "user_select_period"
+        },
+        {
+          "id": "user_select_period",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "전체 예약",
+          "next": "ai_show_all_reservations"
+        },
+        {
+          "id": "ai_show_all_reservations",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "현재 예약 내역 2건입니다.",
+          "component": "card",
+          "options": [
+            "10월 26일 그린힐CC",
+            "12월 29일 라온CC"
+          ],
+          "delay": 1500,
+          "next": "user_select_detail"
+        },
+        {
+          "id": "user_select_detail",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "10월 26일 그린힐CC",
+          "next": "ai_show_reservation_detail"
+        },
+        {
+          "id": "ai_show_reservation_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "그린힐CC 예약 상세 정보입니다.\n\n날짜: 10월 26일(토) 오전 7:30\n그린피: 18만원\n카트피: 4만원\n캐디피: 12만원\n총 금액: 34만원",
+          "delay": 1500,
+          "next": "ai_ask_action"
+        },
+        {
+          "id": "ai_ask_action",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "다른 도움이 필요하신가요?",
+          "component": "quick_reply",
+          "options": ["예약 취소하기", "메인으로 돌아가기"],
+          "delay": 1500,
+          "next": "user_next_action"
+        },
+        {
+          "id": "user_next_action",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "메인으로 돌아가기",
+          "next": "ai_goodbye"
+        },
+        {
+          "id": "ai_goodbye",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "확인해 주셔서 감사합니다.\n좋은 라운딩 되세요!",
+          "delay": 1500,
+          "on_end": "메인화면으로 이동",
+          "next": "end"
+        }
+      ]
+    },
+    {
+      "scenario_id": "AIJOIN003",
+      "title": "추천 받는 라운딩",
+      "description": "AI가 골프장을 추천하는 시나리오",
+      "steps": [
+        {
+          "id": "intro",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "안녕하세요, 티샷 AI입니다.\n무엇을 도와드릴까요?",
+          "component": "quick_reply",
+          "options": ["예약취소", "예약확인", "추천 받는 라운딩"],
+          "delay": 1500,
+          "next": "user_select_recommend"
+        },
+        {
+          "id": "user_select_recommend",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "추천 받는 라운딩",
+          "next": "ai_ask_date"
+        },
+        {
+          "id": "ai_ask_date",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "언제 라운딩 하시려고 하세요?",
+          "component": "quick_reply",
+          "options": ["이번 주말", "다음 주말", "다다음 주말"],
+          "delay": 1500,
+          "next": "user_select_date"
+        },
+        {
+          "id": "user_select_date",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "이번 주말",
+          "next": "ai_ask_region"
+        },
+        {
+          "id": "ai_ask_region",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "어느 지역이 좋으세요?",
+          "component": "quick_reply",
+          "options": ["경기도", "강원도", "충청도"],
+          "delay": 1500,
+          "next": "user_select_region"
+        },
+        {
+          "id": "user_select_region",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "경기도",
+          "next": "ai_ask_price"
+        },
+        {
+          "id": "ai_ask_price",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "예산은 얼마 정도 생각하세요?",
+          "component": "quick_reply",
+          "options": ["10만원 이하", "10-20만원", "20만원 이상"],
+          "delay": 1500,
+          "next": "user_select_price"
+        },
+        {
+          "id": "user_select_price",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "10-20만원",
+          "next": "ai_show_recommendations"
+        },
+        {
+          "id": "ai_show_recommendations",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "조건에 맞는 골프장 3곳을 찾았어요.",
+          "component": "card",
+          "options": [
+            "그린힐CC - 그린피 15만원",
+            "썬밸리CC - 그린피 18만원",
+            "레이크사이드CC - 그린피 13만원"
+          ],
+          "delay": 1500,
+          "next": "user_select_golf_course"
+        },
+        {
+          "id": "user_select_golf_course",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "그린힐CC - 그린피 15만원",
+          "next": "ai_show_course_detail"
+        },
+        {
+          "id": "ai_show_course_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "그린힐CC 상세 정보입니다.\n\n위치: 경기도 이천시\n그린피: 15만원\n카트피: 4만원\n캐디피: 12만원\n평점: 4.5/5.0\n코스 난이도: 중",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "ai_ask_reservation",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "예약을 도와드릴까요?",
+          "component": "quick_reply",
+          "options": ["네, 예약할게요", "다른 곳 볼게요", "메인으로"],
+          "delay": 1500,
+          "next": "user_reservation_decision"
+        },
+        {
+          "id": "user_reservation_decision",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "네, 예약할게요",
+          "next": "ai_confirm_reservation"
+        },
+        {
+          "id": "ai_confirm_reservation",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "예약이 완료되었습니다.\n이번 주 토요일 오전 7:30이에요.\n좋은 라운딩 되세요!",
+          "delay": 1500,
+          "on_end": "예약목록 화면으로 이동",
+          "next": "end"
+        }
+      ]
+    }
+  ]
+}
