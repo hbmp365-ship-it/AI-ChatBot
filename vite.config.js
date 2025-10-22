@@ -5,11 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: '0.0.0.0',
+    host: 'localhost',
     port: 3000,
-    allowedHosts: [
-      '3000-irux7k3zdyt94tlddvkcn-2e77fc33.sandbox.novita.ai',
-      '.sandbox.novita.ai'
-    ]
+    open: true  // 브라우저 자동 열기
   }
 })
