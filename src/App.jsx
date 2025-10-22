@@ -4,7 +4,7 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div className="min-h-screen bg-kakao-bg flex items-center justify-center p-0 sm:p-4">
       <ChatContainer />
     </div>
   );
