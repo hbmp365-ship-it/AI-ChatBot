@@ -7,6 +7,10 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 3000,
-    open: false
+    open: false,
+    allowedHosts: [
+      '3000-irux7k3zdyt94tlddvkcn-2e77fc33.sandbox.novita.ai',
+      '.sandbox.novita.ai'
+    ]
   }
 })
