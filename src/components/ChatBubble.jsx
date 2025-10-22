@@ -1,25 +1,29 @@
-import React from 'react';
+import React from "react";
 
 const ChatBubble = ({ message, bubble, component, options, onOptionClick }) => {
-  const isLeft = bubble === 'left';
+  const isLeft = bubble === "left";
 
   return (
-    <div className={`flex mb-3 animate-slide-in-up ${isLeft ? 'justify-start' : 'justify-end'}`}>
-      <div className={`max-w-[75%] ${isLeft ? 'flex items-start gap-2' : ''}`}>
+    <div
+      className={`flex mb-3 animate-slide-in-up ${
+        isLeft ? "justify-start" : "justify-end"
+      }`}
+    >
+      <div className={`max-w-[75%] ${isLeft ? "flex items-start gap-2" : ""}`}>
         {/* AI 아바타 */}
         {isLeft && (
-          <div className="flex-shrink-0 w-10 h-10 bg-teal-400 rounded-full flex items-center justify-center text-white font-bold text-sm">
+          <div className="flex-shrink-0 w-12 h-12 bg-teal-400 rounded-full flex items-center justify-center text-white font-bold text-xl">
             🤖
           </div>
         )}
-        
+
         <div className="flex flex-col gap-2">
           {/* 메시지 말풍선 */}
           <div
             className={`px-4 py-3 rounded-2xl shadow-sm ${
               isLeft
-                ? 'bg-white text-gray-800 rounded-tl-none'
-                : 'bg-kakao-yellow text-gray-900 rounded-tr-none'
+                ? "bg-white text-gray-800 rounded-tl-none"
+                : "bg-kakao-yellow text-gray-900 rounded-tr-none"
             }`}
           >
             <p className="text-[15px] leading-relaxed whitespace-pre-wrap break-words">
@@ -28,7 +32,7 @@ const ChatBubble = ({ message, bubble, component, options, onOptionClick }) => {
           </div>
 
           {/* Quick Reply 버튼들 */}
-          {component === 'quick_reply' && options && options.length > 0 && (
+          {component === "quick_reply" && options && options.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-1">
               {options.map((option, index) => (
                 <button
@@ -43,7 +47,7 @@ const ChatBubble = ({ message, bubble, component, options, onOptionClick }) => {
           )}
 
           {/* Card 옵션 버튼들 */}
-          {component === 'card' && options && options.length > 0 && (
+          {component === "card" && options && options.length > 0 && (
             <div className="flex flex-col gap-2 mt-1">
               {options.map((option, index) => (
                 <button

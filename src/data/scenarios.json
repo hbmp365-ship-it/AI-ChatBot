@@ -26,12 +26,9 @@
           "id": "ai_show_reservations",
           "speaker": "AI",
           "bubble": "left",
-          "message": "현재 예약 내역이에요.\n어떤 예약을 취소하시겠어요?",
+          "message": "현재 고객님의 예약 내역이에요.\n어떤 예약을 취소하시겠어요?",
           "component": "card",
-          "options": [
-            "10월 26일 그린힐CC",
-            "12월 29일 라온CC"
-          ],
+          "options": ["10월 26일 그린힐CC", "12월 29일 라온CC"],
           "delay": 1500,
           "next": "user_select_reservation"
         },
@@ -47,7 +44,7 @@
           "speaker": "AI",
           "bubble": "left",
           "component": "card",
-          "message": "그린힐CC 라운딩 예약입니다.\n그린피 18만원, 카트피 4만원, 캐디피 12만원이에요.\n취소하시겠어요?",
+          "message": "그린힐CC 라운딩 예약입니다.\n\n그린피: 18만원\n카트피: 4만원\n캐디피: 12만원\n\n취소하시겠어요?",
           "options": ["취소하기", "유지하기"],
           "delay": 1500,
           "next": "user_decision"
@@ -81,8 +78,16 @@
           "speaker": "AI",
           "bubble": "left",
           "message": "예약이 취소되었습니다.\n환불은 3영업일 이내 처리됩니다.",
+          "component": "quick_reply",
+          "options": ["처음으로 돌아가기", "상담자 전화"],
           "delay": 1500,
-          "on_end": "예약목록 화면으로 이동",
+          "next": "user_final_action"
+        },
+        {
+          "id": "user_final_action",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "처음으로 돌아가기",
           "next": "end"
         }
       ]
@@ -132,10 +137,7 @@
           "bubble": "left",
           "message": "현재 예약 내역 2건입니다.",
           "component": "card",
-          "options": [
-            "10월 26일 그린힐CC",
-            "12월 29일 라온CC"
-          ],
+          "options": ["10월 26일 그린힐CC", "12월 29일 라온CC"],
           "delay": 1500,
           "next": "user_select_detail"
         },
@@ -169,8 +171,84 @@
           "id": "user_next_action",
           "speaker": "User",
           "bubble": "right",
-          "message": "메인으로 돌아가기",
-          "next": "ai_goodbye"
+          "message": "예약 취소하기",
+          "next": "ai_redirect_to_cancel"
+        },
+        {
+          "id": "ai_redirect_to_cancel",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "예약 취소를 도와드리겠습니다.",
+          "delay": 1000,
+          "next": "ai_show_reservations_check"
+        },
+        {
+          "id": "ai_show_reservations_check",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "현재 고객님의 예약 내역이에요.\n어떤 예약을 취소하시겠어요?",
+          "component": "card",
+          "options": ["10월 26일 그린힐CC", "12월 29일 라온CC"],
+          "delay": 1500,
+          "next": "user_select_reservation_check"
+        },
+        {
+          "id": "user_select_reservation_check",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "10월 26일 그린힐CC",
+          "next": "ai_show_detail_check"
+        },
+        {
+          "id": "ai_show_detail_check",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "그린힐CC 라운딩 예약입니다.\n\n그린피: 18만원\n카트피: 4만원\n캐디피: 12만원\n\n취소하시겠어요?",
+          "options": ["취소하기", "유지하기"],
+          "delay": 1500,
+          "next": "user_decision_check"
+        },
+        {
+          "id": "user_decision_check",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "취소하기",
+          "next": "ai_confirm_cancel_check"
+        },
+        {
+          "id": "ai_confirm_cancel_check",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "정말 취소하시겠어요?\n취소 수수료 10%가 발생합니다.",
+          "component": "quick_reply",
+          "options": ["네, 취소할게요", "아니요, 유지할게요"],
+          "delay": 1500,
+          "next": "user_final_decision_check"
+        },
+        {
+          "id": "user_final_decision_check",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "네, 취소할게요",
+          "next": "ai_confirm_check"
+        },
+        {
+          "id": "ai_confirm_check",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "예약이 취소되었습니다.\n환불은 3영업일 이내 처리됩니다.",
+          "component": "quick_reply",
+          "options": ["처음으로 돌아가기", "상담자 전화"],
+          "delay": 1500,
+          "next": "user_final_action_check"
+        },
+        {
+          "id": "user_final_action_check",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "처음으로 돌아가기",
+          "next": "end"
         },
         {
           "id": "ai_goodbye",
@@ -209,7 +287,7 @@
           "id": "ai_ask_date",
           "speaker": "AI",
           "bubble": "left",
-          "message": "언제 라운딩 하시려고 하세요?",
+          "message": "언제 라운딩 하시려고 하세요?\n이번주는 날씨가 화창합니다.",
           "component": "quick_reply",
           "options": ["이번 주말", "다음 주말", "다다음 주말"],
           "delay": 1500,
@@ -253,11 +331,11 @@
           "id": "user_select_price",
           "speaker": "User",
           "bubble": "right",
-          "message": "10-20만원",
-          "next": "ai_show_recommendations"
+          "message": "",
+          "next": ""
         },
         {
-          "id": "ai_show_recommendations",
+          "id": "ai_show_recommendations_10_20",
           "speaker": "AI",
           "bubble": "left",
           "message": "조건에 맞는 골프장 3곳을 찾았어요.",
@@ -271,18 +349,318 @@
           "next": "user_select_golf_course"
         },
         {
+          "id": "ai_show_recommendations_under_10",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "조건에 맞는 골프장 3곳을 찾았어요.",
+          "component": "card",
+          "options": [
+            "스카이힐CC - 그린피 8만원",
+            "마운틴뷰CC - 그린피 9만원",
+            "리버사이드CC - 그린피 7만원"
+          ],
+          "delay": 1500,
+          "next": "user_select_golf_course"
+        },
+        {
+          "id": "ai_show_recommendations_over_20",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "조건에 맞는 골프장 3곳을 찾았어요.",
+          "component": "card",
+          "options": [
+            "프리미엄CC - 그린피 25만원",
+            "골든밸리CC - 그린피 28만원",
+            "엘리트CC - 그린피 22만원"
+          ],
+          "delay": 1500,
+          "next": "user_select_golf_course"
+        },
+        {
           "id": "user_select_golf_course",
           "speaker": "User",
           "bubble": "right",
           "message": "그린힐CC - 그린피 15만원",
-          "next": "ai_show_course_detail"
+          "next": "ai_show_greenhill_detail"
         },
         {
-          "id": "ai_show_course_detail",
+          "id": "ai_show_greenhill_detail",
           "speaker": "AI",
           "bubble": "left",
           "component": "card",
-          "message": "그린힐CC 상세 정보입니다.\n\n위치: 경기도 이천시\n그린피: 15만원\n카트피: 4만원\n캐디피: 12만원\n평점: 4.5/5.0\n코스 난이도: 중",
+          "message": "그린힐CC 상세 정보입니다.\n\n위치: 경기도 이천시\n날짜: 이번 주 토요일\n그린피: 15만원\n카트피: 4만원\n캐디피: 12만원\n평점: 4.5/5.0\n코스 난이도: 중",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_skyhill",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "스카이힐CC - 그린피 8만원",
+          "next": "ai_show_skyhill_detail"
+        },
+        {
+          "id": "ai_show_skyhill_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "스카이힐CC 상세 정보입니다.\n\n위치: 경기도 가평군\n날짜: 이번 주 토요일\n그린피: 8만원\n카트피: 3만원\n캐디피: 10만원\n평점: 4.2/5.0\n코스 난이도: 하",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_mountainview",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "마운틴뷰CC - 그린피 9만원",
+          "next": "ai_show_mountainview_detail"
+        },
+        {
+          "id": "ai_show_mountainview_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "마운틴뷰CC 상세 정보입니다.\n\n위치: 경기도 양평군\n날짜: 이번 주 토요일\n그린피: 9만원\n카트피: 3만원\n캐디피: 10만원\n평점: 4.3/5.0\n코스 난이도: 하",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_riverside",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "리버사이드CC - 그린피 7만원",
+          "next": "ai_show_riverside_detail"
+        },
+        {
+          "id": "ai_show_riverside_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "리버사이드CC 상세 정보입니다.\n\n위치: 경기도 포천시\n날짜: 이번 주 토요일\n그린피: 7만원\n카트피: 3만원\n캐디피: 10만원\n평점: 4.1/5.0\n코스 난이도: 하",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_sunvalley",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "썬밸리CC - 그린피 18만원",
+          "next": "ai_show_sunvalley_detail"
+        },
+        {
+          "id": "ai_show_sunvalley_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "썬밸리CC 상세 정보입니다.\n\n위치: 경기도 용인시\n날짜: 이번 주 토요일\n그린피: 18만원\n카트피: 4만원\n캐디피: 12만원\n평점: 4.4/5.0\n코스 난이도: 중",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_lakeside",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "레이크사이드CC - 그린피 13만원",
+          "next": "ai_show_lakeside_detail"
+        },
+        {
+          "id": "ai_show_lakeside_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "레이크사이드CC 상세 정보입니다.\n\n위치: 경기도 파주시\n날짜: 이번 주 토요일\n그린피: 13만원\n카트피: 4만원\n캐디피: 11만원\n평점: 4.3/5.0\n코스 난이도: 중",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_premium",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "프리미엄CC - 그린피 25만원",
+          "next": "ai_show_premium_detail"
+        },
+        {
+          "id": "ai_show_premium_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "프리미엄CC 상세 정보입니다.\n\n위치: 경기도 성남시\n날짜: 이번 주 토요일\n그린피: 25만원\n카트피: 5만원\n캐디피: 15만원\n평점: 4.7/5.0\n코스 난이도: 상",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_goldenvalley",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "골든밸리CC - 그린피 28만원",
+          "next": "ai_show_goldenvalley_detail"
+        },
+        {
+          "id": "ai_show_goldenvalley_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "골든밸리CC 상세 정보입니다.\n\n위치: 경기도 하남시\n날짜: 이번 주 토요일\n그린피: 28만원\n카트피: 5만원\n캐디피: 15만원\n평점: 4.8/5.0\n코스 난이도: 상",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_elite",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "엘리트CC - 그린피 22만원",
+          "next": "ai_show_elite_detail"
+        },
+        {
+          "id": "ai_show_elite_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "엘리트CC 상세 정보입니다.\n\n위치: 경기도 수원시\n날짜: 이번 주 토요일\n그린피: 22만원\n카트피: 5만원\n캐디피: 14만원\n평점: 4.6/5.0\n코스 난이도: 상",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_premium_20",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "프리미엄CC - 그린피 25만원",
+          "next": "ai_show_premium_20_detail"
+        },
+        {
+          "id": "ai_show_premium_20_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "프리미엄CC 상세 정보입니다.\n\n위치: 경기도 성남시\n날짜: 이번 주 토요일\n그린피: 25만원\n카트피: 5만원\n캐디피: 15만원\n평점: 4.7/5.0\n코스 난이도: 상",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_goldenvalley_20",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "골든밸리CC - 그린피 28만원",
+          "next": "ai_show_goldenvalley_20_detail"
+        },
+        {
+          "id": "ai_show_goldenvalley_20_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "골든밸리CC 상세 정보입니다.\n\n위치: 경기도 하남시\n날짜: 이번 주 토요일\n그린피: 28만원\n카트피: 5만원\n캐디피: 15만원\n평점: 4.8/5.0\n코스 난이도: 상",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_elite_20",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "엘리트CC - 그린피 22만원",
+          "next": "ai_show_elite_20_detail"
+        },
+        {
+          "id": "ai_show_elite_20_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "엘리트CC 상세 정보입니다.\n\n위치: 경기도 수원시\n날짜: 이번 주 토요일\n그린피: 22만원\n카트피: 5만원\n캐디피: 14만원\n평점: 4.6/5.0\n코스 난이도: 상",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_greenhill_10_20",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "그린힐CC - 그린피 15만원",
+          "next": "ai_show_greenhill_10_20_detail"
+        },
+        {
+          "id": "ai_show_greenhill_10_20_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "그린힐CC 상세 정보입니다.\n\n위치: 경기도 이천시\n날짜: 이번 주 토요일\n그린피: 15만원\n카트피: 4만원\n캐디피: 12만원\n평점: 4.5/5.0\n코스 난이도: 중",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_sunvalley_10_20",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "썬밸리CC - 그린피 18만원",
+          "next": "ai_show_sunvalley_10_20_detail"
+        },
+        {
+          "id": "ai_show_sunvalley_10_20_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "썬밸리CC 상세 정보입니다.\n\n위치: 경기도 용인시\n날짜: 이번 주 토요일\n그린피: 18만원\n카트피: 4만원\n캐디피: 12만원\n평점: 4.4/5.0\n코스 난이도: 중",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_lakeside_10_20",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "레이크사이드CC - 그린피 13만원",
+          "next": "ai_show_lakeside_10_20_detail"
+        },
+        {
+          "id": "ai_show_lakeside_10_20_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "레이크사이드CC 상세 정보입니다.\n\n위치: 경기도 파주시\n날짜: 이번 주 토요일\n그린피: 13만원\n카트피: 4만원\n캐디피: 11만원\n평점: 4.3/5.0\n코스 난이도: 중",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_skyhill_under_10",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "스카이힐CC - 그린피 8만원",
+          "next": "ai_show_skyhill_under_10_detail"
+        },
+        {
+          "id": "ai_show_skyhill_under_10_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "스카이힐CC 상세 정보입니다.\n\n위치: 경기도 가평군\n날짜: 이번 주 토요일\n그린피: 8만원\n카트피: 3만원\n캐디피: 10만원\n평점: 4.2/5.0\n코스 난이도: 하",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_mountainview_under_10",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "마운틴뷰CC - 그린피 9만원",
+          "next": "ai_show_mountainview_under_10_detail"
+        },
+        {
+          "id": "ai_show_mountainview_under_10_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "마운틴뷰CC 상세 정보입니다.\n\n위치: 경기도 양평군\n날짜: 이번 주 토요일\n그린피: 9만원\n카트피: 3만원\n캐디피: 10만원\n평점: 4.3/5.0\n코스 난이도: 하",
+          "delay": 1500,
+          "next": "ai_ask_reservation"
+        },
+        {
+          "id": "user_select_riverside_under_10",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "리버사이드CC - 그린피 7만원",
+          "next": "ai_show_riverside_under_10_detail"
+        },
+        {
+          "id": "ai_show_riverside_under_10_detail",
+          "speaker": "AI",
+          "bubble": "left",
+          "component": "card",
+          "message": "리버사이드CC 상세 정보입니다.\n\n위치: 경기도 포천시\n날짜: 이번 주 토요일\n그린피: 7만원\n카트피: 3만원\n캐디피: 10만원\n평점: 4.1/5.0\n코스 난이도: 하",
           "delay": 1500,
           "next": "ai_ask_reservation"
         },
@@ -307,7 +685,41 @@
           "id": "ai_confirm_reservation",
           "speaker": "AI",
           "bubble": "left",
-          "message": "예약이 완료되었습니다.\n이번 주 토요일 오전 7:30이에요.\n좋은 라운딩 되세요!",
+          "message": "예약이 완료되었습니다.\n이번 주 토요일 오전 7:30이에요.\n입금완료하셔야 예약이 확정됩니다.\n좋은 라운딩 되세요!",
+          "component": "quick_reply",
+          "options": ["입금하러가기", "메인으로 돌아가기"],
+          "delay": 1500,
+          "next": "user_payment_action"
+        },
+        {
+          "id": "user_payment_action",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "입금하러가기",
+          "next": "ai_payment_guide"
+        },
+        {
+          "id": "ai_payment_guide",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "입금 안내입니다.\n\n💳 입금계좌: 국민은행 123-456-789012\n💰 입금금액: 34만원\n⏰ 입금기한: 24시간 이내\n\n입금 완료 후 자동으로 예약이 확정됩니다.",
+          "component": "quick_reply",
+          "options": ["입금완료", "메인으로 돌아가기"],
+          "delay": 1500,
+          "next": "user_payment_complete"
+        },
+        {
+          "id": "user_payment_complete",
+          "speaker": "User",
+          "bubble": "right",
+          "message": "입금완료",
+          "next": "ai_payment_confirmed"
+        },
+        {
+          "id": "ai_payment_confirmed",
+          "speaker": "AI",
+          "bubble": "left",
+          "message": "입금이 확인되었습니다.\n예약이 확정되었어요!\n\n📅 예약일: 이번 주 토요일 오전 7:30\n🏌️ 골프장: 그린힐CC\n\n좋은 라운딩 되세요!",
           "delay": 1500,
           "on_end": "예약목록 화면으로 이동",
           "next": "end"
