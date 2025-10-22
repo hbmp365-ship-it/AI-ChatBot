@@ -2,6 +2,8 @@
 
 React WebView 기반 카카오톡 스타일 골프 예약 챗봇 애플리케이션
 
+![Preview](https://img.shields.io/badge/React-18.0-blue) ![Tailwind](https://img.shields.io/badge/Tailwind-3.4-38B2AC) ![Vite](https://img.shields.io/badge/Vite-5.0-646CFF)
+
 ## 프로젝트 개요
 
 - **이름**: 티샷 AI 챗봇
@@ -12,20 +14,20 @@ React WebView 기반 카카오톡 스타일 골프 예약 챗봇 애플리케이
 
 ### ✅ 완료된 기능
 
-1. **예약 취소 시나리오**
+1. **예약 취소 시나리오** (8단계)
    - 현재 예약 내역 조회
    - 예약 상세 정보 확인
    - 취소 확인 프로세스
    - 취소 수수료 안내
    - 환불 처리 안내
 
-2. **예약 확인 시나리오**
+2. **예약 확인 시나리오** (9단계)
    - 전체/이번 달/다음 달 예약 조회
    - 예약 상세 정보 확인
    - 날짜, 시간, 요금 정보 표시
    - 추가 작업 선택 가능
 
-3. **골프장 추천 시나리오**
+3. **골프장 추천 시나리오** (13단계)
    - 날짜 선택 (이번 주말/다음 주말/다다음 주말)
    - 지역 선택 (경기도/강원도/충청도)
    - 예산 범위 선택
@@ -36,17 +38,19 @@ React WebView 기반 카카오톡 스타일 골프 예약 챗봇 애플리케이
 ### 🎨 UI/UX 특징
 
 - **카카오톡 스타일**: 친숙한 말풍선 채팅 인터페이스
-- **다크 그린 테마**: 골프 분위기에 어울리는 색상 (#013220)
+- **Tailwind CSS**: 현대적이고 깔끔한 디자인
+- **틸(Teal) 그라데이션**: 헤더 배경색
+- **AI 아바타**: 🤖 이모지 아바타
+- **노란색 말풍선**: 사용자 메시지 (#FFE812)
 - **반응형 디자인**: 모바일과 데스크톱 모두 지원
-- **부드러운 애니메이션**: 메시지 등장 효과
+- **부드러운 애니메이션**: 메시지 슬라이드 인 효과
 - **자동 스크롤**: 새 메시지 자동 스크롤
-- **빠른 답장 버튼**: 사용자 편의성 극대화
 
 ## 기술 스택
 
 - **프레임워크**: React 18
 - **빌드 도구**: Vite 5
-- **스타일링**: CSS3 (카카오톡 스타일 구현)
+- **스타일링**: Tailwind CSS v3
 - **상태 관리**: React Hooks (useState, useEffect, useRef)
 - **프로세스 관리**: PM2
 
@@ -56,15 +60,17 @@ React WebView 기반 카카오톡 스타일 골프 예약 챗봇 애플리케이
 webapp/
 ├── src/
 │   ├── components/
-│   │   ├── ChatBubble.jsx      # 말풍선 컴포넌트
-│   │   └── ChatContainer.jsx   # 채팅 컨테이너 (메인 로직)
+│   │   ├── ChatBubble.jsx      # Tailwind 기반 말풍선 컴포넌트
+│   │   └── ChatContainer.jsx   # 카카오톡 스타일 컨테이너
 │   ├── data/
 │   │   └── scenarios.json      # 3가지 대화 시나리오 정의
 │   ├── App.jsx                 # 메인 앱 컴포넌트
-│   ├── App.css                 # 메인 스타일시트
-│   ├── index.css               # 글로벌 스타일
+│   ├── App.css                 # 커스텀 애니메이션
+│   ├── index.css               # Tailwind directives
 │   └── main.jsx                # 엔트리 포인트
 ├── public/                     # 정적 파일
+├── tailwind.config.js          # Tailwind 설정
+├── postcss.config.js           # PostCSS 설정
 ├── ecosystem.config.cjs        # PM2 설정
 ├── vite.config.js              # Vite 설정
 └── package.json
@@ -102,7 +108,9 @@ webapp/
 # 의존성 설치
 npm install
 
-# 개발 서버 시작
+# 개발 서버 시작 (브라우저 자동 열림)
+npm start
+# 또는
 npm run dev
 
 # PM2로 실행 (프로덕션 모드)
@@ -115,9 +123,21 @@ pm2 list
 pm2 logs teeshot-chatbot --nostream
 ```
 
-### 현재 배포 URL
+### 문제 해결
 
-**개발 서버**: https://3000-irux7k3zdyt94tlddvkcn-de59bda9.sandbox.novita.ai
+Tailwind CSS가 로드되지 않는 경우:
+
+```bash
+# 클린 설치
+rm -rf node_modules
+npm install
+
+# 캐시 삭제
+rm -rf node_modules/.vite
+
+# 재시작
+npm start
+```
 
 ## 사용 방법
 
@@ -137,6 +157,26 @@ pm2 logs teeshot-chatbot --nostream
 - **짧은 문장**: 1초 내로 읽을 수 있는 간결한 문장
 - **명확한 선택지**: 2~3개의 명확한 선택 옵션 제공
 - **자동 진행**: AI 메시지는 1.5초 딜레이 후 자동 표시
+
+## 디자인 가이드
+
+### 색상 팔레트
+
+```css
+--kakao-bg: #F7F8FA      /* 배경색 */
+--kakao-yellow: #FFE812  /* 사용자 말풍선 */
+--kakao-gray: #E5E5EA    /* 버튼 배경 */
+--bot-bubble: #FFFFFF    /* AI 말풍선 */
+--btn-gray: #F2F3F5      /* Quick Reply 버튼 */
+```
+
+### 컴포넌트
+
+- **헤더**: 틸(Teal) 그라데이션 (`from-teal-500 to-teal-600`)
+- **AI 말풍선**: 흰색 배경 + 왼쪽 정렬 + 🤖 아바타
+- **사용자 말풍선**: 노란색 배경 + 오른쪽 정렬
+- **Quick Reply**: 회색 배경의 둥근 버튼
+- **Card Options**: 흰색 배경 + 테두리 버튼
 
 ## 향후 개발 계획
 
@@ -185,6 +225,7 @@ MIT
 
 ---
 
-**최종 업데이트**: 2025-10-21
-**프로젝트 상태**: ✅ 개발 완료 (프로토타입)
-**배포 상태**: ✅ 활성화
+**최종 업데이트**: 2025-10-22  
+**프로젝트 상태**: ✅ 개발 완료 (프로토타입)  
+**배포 상태**: ✅ 활성화  
+**스타일**: Tailwind CSS v3
