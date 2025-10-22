@@ -1,462 +1,246 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  /* 카카오톡 스타일 색상 */
-  --kakao-yellow: #fee500;
-  --kakao-brown: #3c1e1e;
-  --kakao-gray: #f2f3f5;
-  --kakao-gray-dark: #e5e5e5;
-  --kakao-text: #000000;
-  --kakao-text-secondary: #8e8e93;
-  --kakao-blue: #007aff;
-  --kakao-green: #34c759;
-  --kakao-red: #ff3b30;
-  --kakao-orange: #ff9500;
-
-  /* 골프 테마 색상 */
-  --golf-green: #004b49;
-  --golf-green-light: #e8f5e8;
-  --golf-orange: #ff6b35;
-  --golf-blue: #4a90e2;
-
-  /* 배경 */
-  --bg-primary: #f7f8fa;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #f2f3f5;
-
-  /* 텍스트 */
-  --text-primary: #000000;
-  --text-secondary: #8e8e93;
-  --text-tertiary: #c7c7cc;
-
-  /* 그림자 */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.15);
-  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.2);
-
-  /* 반경 */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.dark {
-  --bg-primary: #1c1c1e;
-  --bg-secondary: #2c2c2e;
-  --bg-tertiary: #3a3a3c;
-  --text-primary: #ffffff;
-  --text-secondary: #8e8e93;
-  --text-tertiary: #6d6d70;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@layer base {
-  * {
-    @apply border-border;
+.App {
+  width: 100%;
+  height: 100vh;
+  background-color: #013220;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* 채팅 컨테이너 */
+.chat-container {
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  max-height: 800px;
+  background-color: #A8C5BA;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 헤더 */
+.chat-header {
+  background-color: #013220;
+  color: white;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.restart-btn {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.restart-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 메시지 영역 */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: rgba(1, 50, 32, 0.3);
+  border-radius: 3px;
+}
+
+/* 말풍선 컨테이너 */
+.chat-bubble-container {
+  display: flex;
+  margin-bottom: 8px;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.chat-bubble-container.left {
+  justify-content: flex-start;
+}
+
+.chat-bubble-container.right {
+  justify-content: flex-end;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-
-  body {
-    @apply bg-bg-primary text-text-primary;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-      "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-      "Helvetica Neue", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    line-height: 1.4;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@layer components {
-  /* 앱 컨테이너 - 카카오톡 스타일 */
+/* 말풍선 */
+.chat-bubble {
+  max-width: 70%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  line-height: 1.5;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.ai-bubble {
+  background-color: white;
+  color: #333;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.user-bubble {
+  background-color: #FFE812;
+  color: #333;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 메시지 텍스트 */
+.message-text {
+  font-size: 15px;
+  white-space: pre-wrap;
+  margin-bottom: 8px;
+}
+
+.chat-bubble:not(:has(.quick-reply-buttons)):not(:has(.card-options)) .message-text {
+  margin-bottom: 0;
+}
+
+/* 빠른 답장 버튼 */
+.quick-reply-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.quick-reply-btn {
+  background-color: #013220;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 22px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+  font-weight: 500;
+}
+
+.quick-reply-btn:hover {
+  background-color: #025030;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(1, 50, 32, 0.3);
+}
+
+.quick-reply-btn:active {
+  transform: translateY(0);
+}
+
+/* 카드 옵션 버튼 */
+.card-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.card-option-btn {
+  background-color: #f8f9fa;
+  color: #333;
+  border: 2px solid #013220;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: left;
+  font-weight: 500;
+}
+
+.card-option-btn:hover {
+  background-color: #013220;
+  color: white;
+  transform: translateX(4px);
+}
+
+.card-option-btn:active {
+  transform: translateX(2px);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
   .App {
-    @apply w-full h-screen bg-bg-primary flex justify-center items-center;
-    background: var(--bg-primary);
-    position: relative;
-    overflow: hidden;
+    padding: 0;
   }
 
-  /* 채팅 컨테이너 - 카카오톡 메신저 스타일 */
   .chat-container {
-    @apply w-full max-w-sm h-full max-h-[800px] bg-bg-secondary rounded-none flex flex-col overflow-hidden;
-    background: var(--bg-secondary);
-    box-shadow: var(--shadow-lg);
-    position: relative;
-    z-index: 1;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
   }
 
-  /* 헤더 - 카카오톡 상단바 스타일 */
-  .chat-header {
-    @apply px-4 py-3 flex justify-between items-center relative;
-    background: var(--golf-green);
-    color: white;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    min-height: 56px;
-  }
-
-  .header-title {
-    @apply text-lg font-semibold;
-    color: white;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  }
-
-  .restart-btn {
-    @apply px-3 py-1.5 rounded-full text-sm font-medium cursor-pointer transition-all duration-200;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
-
-  .restart-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.05);
-  }
-
-  .restart-btn:active {
-    transform: scale(0.95);
-  }
-
-  /* 메시지 영역 - 카카오톡 채팅방 스타일 */
-  .chat-messages {
-    @apply flex-1 overflow-y-auto p-4 flex flex-col gap-3;
-    background: var(--bg-primary);
-    scroll-behavior: smooth;
-  }
-
-  .chat-messages::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .chat-messages::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .chat-messages::-webkit-scrollbar-thumb {
-    background: var(--text-tertiary);
-    border-radius: 2px;
-  }
-
-  .chat-messages::-webkit-scrollbar-thumb:hover {
-    background: var(--text-secondary);
-  }
-
-  /* 말풍선 컨테이너 */
-  .chat-bubble-container {
-    @apply flex mb-1;
-    animation: messageSlideIn 0.3s ease-out;
-  }
-
-  .chat-bubble-container.left {
-    @apply justify-start;
-  }
-
-  .chat-bubble-container.right {
-    @apply justify-end;
-  }
-
-  @keyframes messageSlideIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px) scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-
-  /* 말풍선 - 카카오톡 스타일 */
   .chat-bubble {
-    @apply max-w-[80%] px-4 py-3 relative;
-    line-height: 1.4;
-    word-wrap: break-word;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-  }
-
-  /* AI 말풍선 (왼쪽) */
-  .ai-bubble {
-    background: white;
-    color: var(--text-primary);
-    border-bottom-left-radius: 4px;
-    border: 1px solid var(--kakao-gray-dark);
-  }
-
-  .ai-bubble::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: -8px;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 8px 8px 0;
-    border-color: transparent white transparent transparent;
-  }
-
-  /* 사용자 말풍선 (오른쪽) */
-  .user-bubble {
-    background: var(--kakao-yellow);
-    color: var(--text-primary);
-    border-bottom-right-radius: 4px;
-  }
-
-  .user-bubble::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: -8px;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 0 8px 8px;
-    border-color: transparent transparent transparent var(--kakao-yellow);
-  }
-
-  /* 메시지 텍스트 */
-  .message-text {
-    @apply text-sm whitespace-pre-wrap;
-    font-size: 14px;
-    line-height: 1.4;
-  }
-
-  .chat-bubble:not(:has(.quick-reply-buttons)):not(:has(.card-options))
-    .message-text {
-    @apply mb-0;
-  }
-
-  /* 빠른 답장 버튼 - 카카오톡 스타일 */
-  .quick-reply-buttons {
-    @apply flex flex-col gap-2 mt-3;
-  }
-
-  .quick-reply-btn {
-    @apply px-4 py-3 rounded-xl text-sm font-medium cursor-pointer transition-all duration-200 text-center;
-    background: var(--golf-green);
-    color: white;
-    border: none;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .quick-reply-btn:hover {
-    background: #003a38;
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-  }
-
-  .quick-reply-btn:active {
-    transform: translateY(0);
-    box-shadow: var(--shadow-sm);
-  }
-
-  /* 카드 옵션 - 골프장 카드 스타일 */
-  .card-options {
-    @apply flex flex-col gap-2 mt-3;
-  }
-
-  .card-option-btn {
-    @apply px-4 py-3 rounded-xl text-sm font-medium cursor-pointer transition-all duration-200 text-left;
-    background: white;
-    color: var(--text-primary);
-    border: 1px solid var(--kakao-gray-dark);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .card-option-btn:hover {
-    background: var(--golf-green-light);
-    border-color: var(--golf-green);
-    transform: translateX(4px);
-    box-shadow: var(--shadow-md);
-  }
-
-  .card-option-btn:active {
-    transform: translateX(2px);
-  }
-
-  /* 골프장 정보 카드 스타일 */
-  .golf-course-card {
-    @apply p-4 rounded-xl border border-gray-200 bg-white;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .golf-course-card:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-1px);
-  }
-
-  .course-name {
-    @apply font-bold text-base text-gray-800 mb-1;
-  }
-
-  .course-info {
-    @apply text-sm text-gray-500 mb-2;
-  }
-
-  .course-price {
-    @apply text-base font-bold text-orange-500;
-  }
-
-  .course-teams {
-    @apply text-sm font-bold text-green-700;
-  }
-
-  /* 프로모션 태그 */
-  .promotion-tag {
-    @apply px-2 py-1 text-xs font-semibold rounded;
-  }
-
-  .promotion-new {
-    @apply bg-red-100 text-red-600;
-  }
-
-  .promotion-exclusive {
-    @apply bg-green-100 text-green-600;
-  }
-
-  .promotion-recommended {
-    @apply bg-blue-100 text-blue-600;
-  }
-
-  /* 로딩 애니메이션 */
-  .loading-dots {
-    @apply flex items-center gap-1;
-  }
-
-  .loading-dot {
-    @apply w-2 h-2 rounded-full bg-gray-400;
-    animation: loadingBounce 1.4s ease-in-out infinite both;
-  }
-
-  .loading-dot:nth-child(1) {
-    animation-delay: -0.32s;
-  }
-  .loading-dot:nth-child(2) {
-    animation-delay: -0.16s;
-  }
-  .loading-dot:nth-child(3) {
-    animation-delay: 0s;
-  }
-
-  @keyframes loadingBounce {
-    0%,
-    80%,
-    100% {
-      transform: scale(0);
-    }
-    40% {
-      transform: scale(1);
-    }
-  }
-
-  /* 시간 선택 버튼 */
-  .time-slot-btn {
-    @apply px-3 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all duration-200;
-    background: white;
-    color: var(--text-primary);
-    border: 1px solid var(--kakao-gray-dark);
-  }
-
-  .time-slot-btn:hover {
-    background: var(--golf-green-light);
-    border-color: var(--golf-green);
-  }
-
-  .time-slot-btn.selected {
-    background: var(--golf-green);
-    color: white;
-    border-color: var(--golf-green);
-  }
-
-  /* 예약 확인 버튼 */
-  .booking-confirm-btn {
-    @apply w-full py-3 rounded-xl text-base font-semibold cursor-pointer transition-all duration-200;
-    background: var(--golf-green);
-    color: white;
-    border: none;
-  }
-
-  .booking-confirm-btn:hover {
-    background: #003a38;
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-  }
-
-  .booking-confirm-btn:active {
-    transform: translateY(0);
+    max-width: 80%;
   }
 }
 
-@layer utilities {
-  /* 반응형 디자인 - 모바일 우선 */
-  @media (max-width: 768px) {
-    .App {
-      @apply p-0;
-    }
-
-    .chat-container {
-      @apply max-w-full h-screen max-h-screen rounded-none;
-    }
-
-    .chat-bubble {
-      @apply max-w-[85%];
-    }
-
-    .chat-header {
-      @apply px-3 py-2;
-    }
-
-    .header-title {
-      @apply text-base;
-    }
-
-    .chat-messages {
-      @apply p-3;
-    }
+/* 로딩 애니메이션 (선택적) */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
   }
-
-  @media (max-width: 480px) {
-    .chat-messages {
-      @apply p-2;
-    }
-
-    .chat-bubble {
-      @apply px-3 py-2;
-    }
-
-    .quick-reply-btn,
-    .card-option-btn {
-      @apply px-3 py-2 text-xs;
-    }
+  50% {
+    opacity: 0.5;
   }
+}
 
-  /* 포커스 상태 */
-  .quick-reply-btn:focus,
-  .card-option-btn:focus,
-  .restart-btn:focus {
-    outline: 2px solid var(--golf-green);
-    outline-offset: 2px;
-  }
-
-  /* 다크모드 지원 */
-  .dark .chat-container {
-    background: var(--bg-secondary);
-  }
-
-  .dark .ai-bubble {
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    border-color: var(--bg-tertiary);
-  }
-
-  .dark .card-option-btn {
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    border-color: var(--bg-tertiary);
-  }
-
-  .dark .golf-course-card {
-    background: var(--bg-secondary);
-    border-color: var(--bg-tertiary);
-  }
+.loading {
+  animation: pulse 1.5s ease-in-out infinite;
 }
